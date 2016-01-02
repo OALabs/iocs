@@ -1,2 +1,2 @@
 # iocs
-Machine consumable malware indicators.
+Machine machine-digestible malware indicators.
