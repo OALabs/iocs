@@ -1,2 +1,2 @@
 # iocs
-Machine machine-digestible malware indicators.
+Machine-digestible malware indicators.
