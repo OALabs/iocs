@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="3d6882ca-18be-48ed-8f4c-38cb1843b51d" last-modified="2014-02-19T04:18:42Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>asprox - kuluoz disk only</short_description>
+    <description>WARNING OPENIOC v1.1 ONLY
+ioc to detect the asprox/kuluoz trojan. this ioc relies on disk only detections for the trojan. the on-disk footprint of asprox is very limited as you can see so there is a good chance that this will hit more than just asprox. on the plus side exe files in localappdata that have a run key are probably bad anyway.</description>
+    <authored_by>@herrcore</authored_by>
+    <authored_date>2014-02-19T03:20:36Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="5e003c92-f308-42a8-922e-8b5cc3c17714">
+      <Indicator operator="AND" id="ae1d98e5-4eac-45f9-80de-ee1f69669ccd">
+        <IndicatorItem id="761761ba-8143-44e4-b505-dd1552ad934d" condition="contains" preserve-case="false" negate="false">
+          <Context document="RegistryItem" search="RegistryItem/KeyPath" type="mir" />
+          <Content type="string">Microsoft\Windows\CurrentVersion\Run\</Content>
+        </IndicatorItem>
+        <IndicatorItem id="3477a3ff-abdf-4631-9929-07a29f74a61c" condition="matches" preserve-case="false" negate="false">
+          <Context document="RegistryItem" search="RegistryItem/ValueName" type="mir" />
+          <Content type="string">[a-z]{8}</Content>
+        </IndicatorItem>
+        <IndicatorItem id="460080df-2586-48a9-a431-161b6e3cf88b" condition="matches" preserve-case="false" negate="false">
+          <Context document="RegistryItem" search="RegistryItem/Text" type="mir" />
+          <Content type="string">\\Users\\[A-Za-z\-\.]+\\AppData\\Local\\[a-z]{8}\.exe$</Content>
+        </IndicatorItem>
+        <IndicatorItem id="af83238b-fc97-40d9-8114-bcc9c0052bf3" condition="matches" preserve-case="false" negate="false">
+          <Context document="FileItem" search="FileItem/FullPath" type="mir" />
+          <Content type="string">\\Users\\[A-Za-z\-\.]+\\AppData\\Local\\[a-z]{8}\.exe$</Content>
+        </IndicatorItem>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>
